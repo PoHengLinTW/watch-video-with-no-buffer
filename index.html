@@ -71,6 +71,12 @@
         }, 1000);
 
         player.src({ src: source, type: 'application/x-mpegURL' });
+        player.play();
+        // Play and pause to trigger buffer event
+
+        setTimeout(() => {
+          player.pause();
+        }, 50);
       });
     </script>
   </body>
