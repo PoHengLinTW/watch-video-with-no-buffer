@@ -1,18 +1,37 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
     <title>Video Player Example</title>
-    <link href="https://cdn.jsdelivr.net/npm/video.js@8.22.0/dist/video-js.min.css" rel="stylesheet" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/video.js@8.22.0/dist/video-js.min.css"
+      rel="stylesheet"
+    />
     <script src="https://cdn.jsdelivr.net/npm/video.js@8.22.0/dist/video.min.js"></script>
   </head>
   <body>
     <label for="my-video-source">Source</label>
-    <input id="my-video-source" type="text" value="" /><br />
-    <video id="my-video" class="video-js" controls preload="auto" width="640" height="264" data-setup="{}">
+    <input id="my-video-source" type="text" value="" />
+    <button id="confirm-button">Confirm</button>
+    <br />
+    <label for="video-buffer-progress">Progress</label>
+    <progress id="video-buffer-progress" max="100" value="0"></progress>
+    <br />
+    <video
+      id="my-video"
+      class="video-js"
+      controls
+      preload="auto"
+      width="640"
+      height="264"
+      data-setup="{}"
+    >
       <!-- <source id="my-video-source" src="https://v.gsuus.com/play/7e5y5BBe/index.m3u8" type="application/x-mpegURL" /> -->
       <p class="vjs-no-js">
-        To view this video please enable JavaScript, and consider upgrading to a web browser that
-        <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+        To view this video please enable JavaScript, and consider upgrading to a
+        web browser that
+        <a href="https://videojs.com/html5-video-support/" target="_blank"
+          >supports HTML5 video</a
+        >
       </p>
     </video>
     <script>
@@ -30,13 +49,19 @@
         },
       });
 
-      const sourceInput = document.getElementById('my-video-source');
-      sourceInput.addEventListener('change', () => {
+      const confirmButton = document.getElementById('confirm-button');
+      confirmButton.addEventListener('click', () => {
+        const sourceInput = document.getElementById('my-video-source');
         const source = sourceInput.value;
-        
+
         setInterval(() => {
           const buffered = player.bufferedEnd();
           const duration = player.duration();
+
+          const progress = (buffered / duration) * 100;
+          document.getElementById('video-buffer-progress').value = progress;
+          document.getElementById('video-buffer-progress').textContent =
+            progress;
 
           console.log(`Buffered: ${buffered} / ${duration}`);
 
@@ -44,6 +69,7 @@
             console.log('Fully buffered');
           }
         }, 1000);
+
         player.src({ src: source, type: 'application/x-mpegURL' });
       });
     </script>
