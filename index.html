@@ -9,12 +9,16 @@
     <script src="https://cdn.jsdelivr.net/npm/video.js@8.22.0/dist/video.min.js"></script>
   </head>
   <body>
-    <label for="my-video-source">Source (.m3u8)</label>
-    <input id="my-video-source" type="text" value="" />
-    <button id="confirm-button">Confirm</button>
+    <div>
+      <label for="my-video-source">Source (.m3u8)</label>
+      <input id="my-video-source" type="text" value="" />
+      <button id="confirm-button">Confirm</button>
+    </div>
     <br />
-    <label for="video-buffer-progress">Progress</label>
-    <progress id="video-buffer-progress" max="100" value="0"></progress>
+    <div>
+      <label for="video-buffer-progress">Progress</label>
+      <progress id="video-buffer-progress" max="100" value="0"></progress>
+    </div>
     <br />
     <video
       id="my-video"
@@ -35,8 +39,8 @@
       </p>
     </video>
     <script>
-      videojs.Vhs.GOAL_BUFFER_LENGTH = 10000;
-      videojs.Vhs.MAX_GOAL_BUFFER_LENGTH = 15000;
+      videojs.Vhs.GOAL_BUFFER_LENGTH = 5000;
+      videojs.Vhs.MAX_GOAL_BUFFER_LENGTH = 7000;
 
       const player = videojs('my-video', {
         controls: true,
@@ -71,7 +75,7 @@
         }, 1000);
 
         player.src({ src: source, type: 'application/x-mpegURL' });
-        
+
         // Play and pause to trigger buffer event
         player.play();
         setTimeout(() => {
